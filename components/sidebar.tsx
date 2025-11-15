@@ -1,6 +1,6 @@
 'use client'
 
-import { Map, Truck, Zap, AlertCircle, BarChart3, Settings } from 'lucide-react'
+import { Map, Truck, Zap, AlertCircle, BarChart3, Settings, Radar } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
@@ -15,6 +15,7 @@ const menuItems = [
   { id: 'overview', label: 'Overview', icon: Map },
   { id: 'optimization', label: 'Route Optimization', icon: Zap },
   { id: 'fleet', label: 'Fleet Management', icon: Truck },
+  { id: 'tracking', label: 'Vehicle Tracking', icon: Radar },
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },
 ]
 
