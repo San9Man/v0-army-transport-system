@@ -1,17 +1,17 @@
-'use client'
+"use client"
 
-import { useState, useEffect } from 'react'
-import { AlertCircle, Map, Truck, Zap, Menu, Bell, Settings, LogOut } from 'lucide-react'
-import { Header } from '@/components/header'
-import { Sidebar } from '@/components/sidebar'
-import { ConvoyMap } from '@/components/convoy-map'
-import { FleetStatus } from '@/components/fleet-status'
-import { RouteOptimization } from '@/components/route-optimization'
-import { AlertsPanel } from '@/components/alerts-panel'
-import { MetricsOverview } from '@/components/metrics-overview'
-import { InteractiveMap } from '@/components/interactive-map'
-import { DeploymentWorkflow } from '@/components/deployment-workflow'
-import { VehicleTracking } from '@/components/vehicle-tracking'
+import { useState, useEffect } from "react"
+import { Header } from "@/components/header"
+import { Sidebar } from "@/components/sidebar"
+import { ConvoyMap } from "@/components/convoy-map"
+import { FleetStatus } from "@/components/fleet-status"
+import { RouteOptimization } from "@/components/route-optimization"
+import { AlertsPanel } from "@/components/alerts-panel"
+import { MetricsOverview } from "@/components/metrics-overview"
+import { InteractiveMap } from "@/components/interactive-map"
+import { DeploymentWorkflow } from "@/components/deployment-workflow"
+import { VehicleTracking } from "@/components/vehicle-tracking"
+import { TripAnalytics } from "@/components/trip-analytics"
 
 interface Location {
   lat: number
@@ -36,13 +36,13 @@ interface DeployedVehicle {
   eta: number
   currentLocation: Location
   progress: number
-  status: 'in-transit' | 'completed' | 'alert'
+  status: "in-transit" | "completed" | "alert"
   lastUpdate: Date
 }
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true)
-  const [activeTab, setActiveTab] = useState('overview')
+  const [activeTab, setActiveTab] = useState("overview")
   const [confirmedRoute, setConfirmedRoute] = useState<{
     start: Location
     end: Location
@@ -53,21 +53,21 @@ export default function Dashboard() {
 
   useEffect(() => {
     const demoVehicle: DeployedVehicle = {
-      deploymentId: 'DEMO-001',
+      deploymentId: "DEMO-001",
       vehicle: {
-        id: 'heavy-cargo',
-        name: 'Heavy Cargo Truck',
+        id: "heavy-cargo",
+        name: "Heavy Cargo Truck",
         capacity: 15000,
         speed: 80,
-        icon: '🚛',
+        icon: "🚛",
       },
-      startLocation: { lat: 40.7128, lng: -74.006, name: 'Base Alpha' },
-      endLocation: { lat: 34.0522, lng: -118.2437, name: 'Base Bravo' },
+      startLocation: { lat: 40.7128, lng: -74.006, name: "Base Alpha" },
+      endLocation: { lat: 34.0522, lng: -118.2437, name: "Base Bravo" },
       distance: 3944,
       eta: 49.3,
-      currentLocation: { lat: 40.7128, lng: -74.006, name: 'Base Alpha' },
+      currentLocation: { lat: 40.7128, lng: -74.006, name: "Base Alpha" },
       progress: 0,
-      status: 'in-transit',
+      status: "in-transit",
       lastUpdate: new Date(),
     }
     setDeployedVehicles([demoVehicle])
@@ -77,26 +77,24 @@ export default function Dashboard() {
     const interval = setInterval(() => {
       setDeployedVehicles((prev) =>
         prev.map((vehicle) => {
-          if (vehicle.status !== 'in-transit') return vehicle
+          if (vehicle.status !== "in-transit") return vehicle
 
           const newProgress = Math.min(vehicle.progress + 0.5, 100)
           const progressRatio = newProgress / 100
 
           const newLat =
-            vehicle.startLocation.lat +
-            (vehicle.endLocation.lat - vehicle.startLocation.lat) * progressRatio
+            vehicle.startLocation.lat + (vehicle.endLocation.lat - vehicle.startLocation.lat) * progressRatio
           const newLng =
-            vehicle.startLocation.lng +
-            (vehicle.endLocation.lng - vehicle.startLocation.lng) * progressRatio
+            vehicle.startLocation.lng + (vehicle.endLocation.lng - vehicle.startLocation.lng) * progressRatio
 
           return {
             ...vehicle,
             progress: newProgress,
-            currentLocation: { lat: newLat, lng: newLng, name: 'En Route' },
-            status: newProgress >= 100 ? 'completed' : 'in-transit',
+            currentLocation: { lat: newLat, lng: newLng, name: "En Route" },
+            status: newProgress >= 100 ? "completed" : "in-transit",
             lastUpdate: new Date(),
           }
-        })
+        }),
       )
     }, 500)
 
@@ -121,7 +119,7 @@ export default function Dashboard() {
       eta: confirmedRoute.eta,
       currentLocation: confirmedRoute.start,
       progress: 0,
-      status: 'in-transit',
+      status: "in-transit",
       lastUpdate: new Date(),
     }
 
@@ -154,7 +152,7 @@ export default function Dashboard() {
             <MetricsOverview />
 
             {/* Main Content Grid */}
-            {activeTab === 'overview' && (
+            {activeTab === "overview" && (
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2 space-y-6">
                   <ConvoyMap />
@@ -178,17 +176,19 @@ export default function Dashboard() {
               </div>
             )}
 
-            {activeTab === 'optimization' && (
-              <RouteOptimization />
-            )}
+            {activeTab === "optimization" && <RouteOptimization />}
 
-            {activeTab === 'fleet' && (
-              <FleetStatus fullPage />
-            )}
+            {activeTab === "fleet" && <FleetStatus fullPage />}
 
-            {activeTab === 'tracking' && (
+            {activeTab === "tracking" && (
               <div className="grid grid-cols-1 gap-6">
                 <VehicleTracking deployedVehicles={deployedVehicles} />
+              </div>
+            )}
+
+            {activeTab === "analytics" && (
+              <div className="grid grid-cols-1 gap-6">
+                <TripAnalytics />
               </div>
             )}
           </div>
