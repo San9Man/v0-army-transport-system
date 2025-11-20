@@ -187,7 +187,9 @@ export function TripAnalytics() {
                     }`}
                   />
                   <div className="flex-1">
-                    <p className="font-medium text-foreground">{trip.tripId}</p>
+                    <p className="font-medium text-foreground" style={{ fontFamily: "var(--font-army-rust)" }}>
+                      {trip.tripId}
+                    </p>
                     <p className="text-sm text-muted-foreground">
                       {trip.vehicleType} • {trip.startLocation} → {trip.endLocation}
                     </p>
@@ -232,7 +234,12 @@ export function TripAnalytics() {
                       <div className="flex gap-2">
                         <Route className="h-4 w-4 text-yellow-500 flex-shrink-0 mt-0.5" />
                         <div>
-                          <p className="text-sm font-medium text-yellow-600">Detour Details</p>
+                          <p
+                            className="text-sm font-medium text-yellow-600"
+                            style={{ fontFamily: "var(--font-army-rust)" }}
+                          >
+                            Detour Details
+                          </p>
                           <p className="text-sm text-yellow-700 mt-1">{trip.detourReason}</p>
                           <p className="text-xs text-yellow-600 mt-1">Extra Distance: {trip.detouredDistance} km</p>
                         </div>
@@ -245,7 +252,12 @@ export function TripAnalytics() {
                       <div className="flex gap-2">
                         <AlertTriangle className="h-4 w-4 text-red-500 flex-shrink-0 mt-0.5" />
                         <div>
-                          <p className="text-sm font-medium text-red-600">Security Incident Report</p>
+                          <p
+                            className="text-sm font-medium text-red-600"
+                            style={{ fontFamily: "var(--font-army-rust)" }}
+                          >
+                            Security Incident Report
+                          </p>
                           <ul className="text-sm text-red-700 mt-2 space-y-1">
                             {trip.incidents.map((incident, idx) => (
                               <li key={idx} className="flex gap-2">
@@ -265,7 +277,12 @@ export function TripAnalytics() {
                       <div className="flex gap-2">
                         <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
                         <div>
-                          <p className="text-sm font-medium text-green-600">Trip Completed Successfully</p>
+                          <p
+                            className="text-sm font-medium text-green-600"
+                            style={{ fontFamily: "var(--font-army-rust)" }}
+                          >
+                            Trip Completed Successfully
+                          </p>
                           <p className="text-xs text-green-700 mt-1">No hinderance or incidents reported</p>
                         </div>
                       </div>
